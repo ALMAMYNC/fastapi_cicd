@@ -1,0 +1,28 @@
+
+
+name: 'Build and Deploy to Render Cloud Run'
+
+on:
+  push:
+    branches:
+      - '"main"'
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      -  uses: 'actions/checkout@v4'
+      -  uses: 'actions/stup-python@v5'
+
+         with:
+           python-version: '3.12'
+
+      - name: 'Install dependencies'
+        run: pip install -r requirements.txt
+      - name: Lint code
+        run: |
+          pip install black
+          black --check .
+
+          echo ${{ steps.deploy.outputs.url }}
